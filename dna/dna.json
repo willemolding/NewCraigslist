@@ -1,41 +1,18 @@
 {
   "Version": 1,
-  "UUID": "7846a650-4510-11e8-b5ce-44fb42fffee9",
+  "UUID": "7846a650-4510-11e8-b5ce-44fb42fffee8",
   "Name": "NewCraigslist",
   "Properties": {
     "description": "Holochain app prototyping a new decentralized Craigslist",
     "language": "en"
   },
   "PropertiesSchemaFile": "properties_schema.json",
-
-  "RequiresVersion": 23,
+  "RequiresVersion": 26,
   "DHTConfig": {
     "HashType": "sha2-256",
     "NeighborhoodSize": 0
   },
   "Zomes": [
-    {
-      "Name": "peerVis",
-      "Desription": "show whos online",
-      "CodeFile": "peerVis.js",
-      "RibosomeType": "js",
-      "Config": {
-        "ErrorHandling": "throwErrors"
-      },
-      "Entries": [
-        {
-          "Name": "peerLink",
-          "DataFormat": "links"
-        }
-      ],
-      "Functions": [
-        {
-          "Name": "getPeers",
-          "CallingType": "json",
-          "Exposure": "public"
-        }
-      ]
-    },
     {
       "Name": "readAndWritePosts",
       "Description": "read and write posts",

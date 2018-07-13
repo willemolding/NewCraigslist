@@ -24,5 +24,10 @@
       "type": "integer"
     }
   },
-  "required": ["title", "category", "city", "email", "timestamp"]
+  "required": ["title", "category", "city", "email", "timestamp"],
+  "querysearchIndexFields" : [
+    {"field" : "timestamp", "type" : "ordinal", "ascending" : true},
+    {"field" : "title", "type" : "textSearch", "weight" : 3.0},
+    {"field" : "details", "type" : "textSearch", "weight" : 1.0}
+  ]
 }

@@ -4,7 +4,9 @@
   "Name": "NewCraigslist",
   "Properties": {
     "description": "Holochain app prototyping a new decentralized Craigslist",
-    "language": "en"
+    "language": "en",
+    "textSearchSpec": "{\"postData\":{\"fields\":[{\"fieldName\":\"title\",\"weight\":3},{\"fieldName\":\"details\",\"weight\":1}]}}",
+    "indexSpec": "{\"postData\":[{\"fieldName\":\"timestamp\"}]}"
   },
   "PropertiesSchemaFile": "properties_schema.json",
   "RequiresVersion": 26,
@@ -93,6 +95,61 @@
           "Name": "readPostsByCityAndCategory",
           "CallingType": "json",
           "Exposure": "public"
+        },
+        {
+          "Name": "getPostsNewerThan",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "searchPosts",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ]
+    },
+    {
+      "Name": "querysearch",
+      "Description": "Generic indexing functions provision",
+      "RibosomeType": "js",
+      "CodeFile": "querysearch.js",
+      "Config": {
+        "ErrorHandling": "throwErrors"
+      },
+      "Functions": [
+        {
+          "Name": "indexKeywordQS",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "indexQS",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "queryQS",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "searchQS",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ],
+      "Entries": [
+        {
+          "Name": "keywordAnchor",
+          "DataFormat": "json",
+          "SchemaFile": "keywordAnchor.json",
+          "Sharing": "public"
+        },
+        {
+          "Name": "skel_postData",
+          "DataFormat": "json",
+          "SchemaFile": "skel_postData.json",
+          "Sharing": "public"
         }
       ]
     }

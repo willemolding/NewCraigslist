@@ -1,0 +1,25 @@
+{
+  "name": "newcraigslist",
+  "version": "1.0.0",
+  "description": "A distributed Craigslist-like Holochain app prototype developed during the Vancouver Holochain Hackathon!",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willemolding/NewCraigslist.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willemolding/NewCraigslist/issues"
+  },
+  "homepage": "https://github.com/willemolding/NewCraigslist#readme",
+  "dependencies": {
+    "holochain-init-querysearch": "file:../holochain-querysearch/holochain-init-querysearch/holochain-init-querysearch-1.0.0.tgz"
+  }
+}

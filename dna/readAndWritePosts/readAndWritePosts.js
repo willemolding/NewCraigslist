@@ -46,6 +46,7 @@ function linkCheck(key, link) {
  * This function is a good place to put any set-up logic if req'd
  **/
 function genesis() {
+  populateHC();
   return true;
 }
 
@@ -102,6 +103,9 @@ function writePost(data) {
   var hash;
   try {
     hash = commit(POST_DATA, data);
+    call('querysearch', 'indexQS', {entryType: POST_DATA, entryHash: hash})
+    call('querysearch', 'indexKeywordQS', {entryType: POST_DATA, entryHash: hash})
+
   } catch (exception) {
     debug("Error writing " + data + exception);
     return null;
@@ -292,4 +296,85 @@ function readPost(hash) {
   // get returns entry corresponding to the hash
   // or a HashNotFound message
   return get(hash, { Local: true });
+}
+
+function getPostsNewerThan(payload) {
+  var t = payload.timestamp;
+  var postHashes = call('querysearch', 'queryQS', {
+    entryType: POST_DATA, 
+    queryOptions: {
+      Field: 'timestamp',
+      Constrain: {
+        GT: t,
+      },
+      Ascending: true,
+      Load: true
+    }
+  });
+  var posts = JSON.parse(postHashes).map(function(hash) {
+    return get(hash)
+  });
+  return posts;
+}
+
+function searchPosts(payload) {
+  var rankedPosts = JSON.parse(call('querysearch', 'searchQS', {
+    queryString: payload.queryString,
+    entryType: POST_DATA
+  }));
+
+  var posts = rankedPosts.map(function(elem) {
+    return {Entry: get(elem.Hash), Weight: elem.Weight};
+  });
+  return posts;
+}
+
+function populateHC() {
+  writePost({
+    title: "Paint my fence?",
+    category: "Jobs",
+    subcategory: "customer service",
+    city: "Vancouver",
+    details:
+      "My fence is in need of a new coat of paint and primer. Will pay handsomely.",
+    email: "earnest@gmail.com",
+    timestamp: 1000
+  });
+  writePost({
+    title: "Spectaular backrubs, seeking",
+    category: "Jobs",
+    subcategory: "admin",
+    city: "Vancouver",
+    details: "In need of a great backrub",
+    email: "soreBack@gmail.com",
+    timestamp: 2000
+  });
+  writePost({
+    title: "Paint my fence",
+    category: "Personals",
+    subcategory: "missed connections",
+    city: "Vancouver",
+    details: "please?",
+    email: "paint@gmail.com",
+    timestamp: 3000
+  });
+
+  writePost({
+    title: "Miniature Home",
+    category: "Housing",
+    subcategory: "apartments",
+    city: "Vancouver",
+    details: "surprisingly spacious",
+    email: "mini@gmail.com",
+    timestamp: 4000
+  });
+  writePost({
+    title: "Fridge",
+    category: "ForSale",
+    subcategory: "appliances",
+    city: "Vancouver",
+    details: "like new",
+    email: "mini@gmail.com",
+    timestamp: 5000
+  });
 }
